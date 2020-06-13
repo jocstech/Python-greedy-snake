@@ -21,10 +21,11 @@ screen = pygame.display.set_mode(size)
 # ball = pygame.transform.scale(ball, (50, 50))
 # ballreact = ball.get_rect()
 
-
-snack_head_speed = [1, 0]
-snack_head_position = (random.randrange(0, width), random.randrange(0, height))
-snack_head_size = (20, 20)
+snack_head_speed_base = 3
+snack_head_speed = [snack_head_speed_base, 0]
+snack_head_position = (random.randrange(2, width-2),
+                       random.randrange(2, height-2))
+snack_head_size = (30, 30)
 snack_head_color = white
 snack_head = pygame.Rect(snack_head_position, snack_head_size)
 snack_body = []
@@ -44,18 +45,18 @@ while 1:  # 1 = true
     if snack_head.top < 0 or snack_head.bottom > height:
         snack_head_speed[1] = -snack_head_speed[1]
     # 按键控制逻辑
-    if(key[pygame.K_UP]):
+    if(key[pygame.K_UP] or key[pygame.K_w]):
         snack_head_speed[0] = 0
-        snack_head_speed[1] = -1
-    if(key[pygame.K_DOWN]):
+        snack_head_speed[1] = -snack_head_speed_base
+    if(key[pygame.K_DOWN] or key[pygame.K_s]):
         snack_head_speed[0] = 0
-        snack_head_speed[1] = 1
-    if(key[pygame.K_LEFT]):
+        snack_head_speed[1] = snack_head_speed_base
+    if(key[pygame.K_LEFT] or key[pygame.K_a]):
         snack_head_speed[1] = 0
-        snack_head_speed[0] = -1
-    if(key[pygame.K_RIGHT]):
+        snack_head_speed[0] = -snack_head_speed_base
+    if(key[pygame.K_RIGHT] or key[pygame.K_d]):
         snack_head_speed[1] = 0
-        snack_head_speed[0] = 1
+        snack_head_speed[0] = snack_head_speed_base
     # 复原画布
     screen.fill(black)
     pygame.draw.rect(screen, snack_head_color, snack_head)
